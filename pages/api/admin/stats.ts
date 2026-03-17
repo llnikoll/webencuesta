@@ -5,7 +5,13 @@ import { validateAdminSession } from '@/lib/auth';
 type ResponseData = {
   totalVotes?: number;
   totalOptions?: number;
-  options?: Array<{ text: string; votes: number }>;
+  options?: Array<{ 
+    text: string; 
+    votes: number;
+    name?: string;
+    party?: string;
+    image?: string;
+  }>;
   votes?: Array<any>;
   error?: string;
 };
@@ -38,7 +44,14 @@ export default async function handler(
       where: { id: pollId },
       include: {
         options: {
-          select: { id: true, text: true, votes: true },
+          select: { 
+            id: true, 
+            text: true, 
+            votes: true,
+            name: true,
+            party: true,
+            image: true,
+          },
         },
         votes: {
           include: { option: { select: { text: true } } },

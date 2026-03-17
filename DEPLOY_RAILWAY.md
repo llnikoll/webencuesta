@@ -85,37 +85,23 @@ NODE_ENV=production
 Haz clic en tu servicio de PostgreSQL y copia:
 - `DATABASE_URL`: Conexión a la BD
 
-## Paso 5: Ejecutar Migraciones
+## Paso 5: Migraciones Automáticas ✅
 
-### 5.1 Acceder a la consola
+**Las migraciones ahora son automáticas** gracias a la configuración en `railway.json`.
 
-1. En Railway, ve a tu proyecto
-2. Haz clic en el servicio de la aplicación (web)
-3. Ve a la pestaña "Deployments"
-4. En el último deployment, haz clic en "Deploy Logs"
+El deploy ejecutará automáticamente:
+1. `npm run build` - Compila la aplicación
+2. `npx prisma migrate deploy` - Aplica migraciones a PostgreSQL
+3. `npm run prisma:seed` - Crea datos iniciales (si no existen)
+4. `npm start` - Inicia el servidor
 
-### 5.2 Ejecutar comandos
+**No necesitas ejecutar comandos manualmente.**
 
-En el panel de Railway (o localmente), ejecuta:
-
-```bash
-# Ejecutar migraciones
-npm run prisma:migrate -- --skip-generate
-
-# Generar cliente Prisma
-npm run prisma:generate
-
-# Crear datos iniciales
-npx tsx prisma/seed.ts
-```
-
-**Alternativa**: Si prefieres ejecutar localmente después del deploy:
+### Si necesitas ejecutar migraciones manualmente:
 
 ```bash
-# Desde tu máquina
-export DATABASE_URL="tu_database_url_de_railway"
-npm run prisma:migrate -- --skip-generate
-npm run prisma:seed
+# Accede a la consola de Railway (Shell)
+npx prisma migrate deploy
 ```
 
 ## Paso 6: Verificar el Deploy

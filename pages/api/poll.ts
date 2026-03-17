@@ -4,7 +4,14 @@ import prisma from '@/lib/prisma';
 type ResponseData = {
   id?: string;
   title?: string;
-  options?: Array<{ id: string; text: string; votes: number }>;
+  options?: Array<{ 
+    id: string; 
+    text: string; 
+    votes: number;
+    name?: string;
+    party?: string;
+    image?: string;
+  }>;
   createdAt?: string;
   revealAt?: string;
   error?: string;
@@ -29,7 +36,14 @@ export default async function handler(
       where: { id: pollId },
       include: {
         options: {
-          select: { id: true, text: true, votes: true },
+          select: { 
+            id: true, 
+            text: true, 
+            votes: true,
+            name: true,
+            party: true,
+            image: true,
+          },
         },
       },
     });

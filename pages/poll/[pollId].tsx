@@ -9,6 +9,9 @@ interface Option {
   id: string;
   text: string;
   votes: number;
+  name?: string;
+  party?: string;
+  image?: string;
 }
 
 interface Poll {

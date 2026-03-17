@@ -26,7 +26,14 @@ ChartJS.register(
 );
 
 interface ResultsProps {
-  options: Array<{ id: string; text: string; votes: number }>;
+  options: Array<{ 
+    id: string; 
+    text: string; 
+    votes: number;
+    name?: string;
+    party?: string;
+    image?: string;
+  }>;
   totalVotes: number;
 }
 
@@ -85,9 +92,25 @@ export default function Results({ options, totalVotes }: ResultsProps) {
       <div className="grid grid-cols-1 gap-4">
         {options.map((option, idx) => (
           <div key={option.id} className="card">
-            <div className="flex items-center justify-between mb-2">
-              <span className="font-semibold text-gray-800">{option.text}</span>
-              <span className="text-sm text-gray-500">{option.votes} votos ({percentages[idx]}%)</span>
+            <div className="flex items-center gap-4 mb-3">
+              {option.image && (
+                <img
+                  src={option.image}
+                  alt={option.text}
+                  className="w-14 h-14 rounded-full object-cover border-2 border-gray-200"
+                />
+              )}
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold text-gray-800">{option.text}</span>
+                  {option.party && (
+                    <span className="text-xs px-2 py-0.5 bg-indigo-100 text-indigo-700 rounded-full">
+                      {option.party}
+                    </span>
+                  )}
+                </div>
+                <span className="text-sm text-gray-500">{option.votes} votos ({percentages[idx]}%)</span>
+              </div>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
               <div

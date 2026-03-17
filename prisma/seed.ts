@@ -3,9 +3,19 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Creando encuesta de ejemplo...');
+  console.log('Inicializando base de datos...');
 
-  // Crear encuesta
+  // Verificar si ya existe la encuesta
+  const existingPoll = await prisma.poll.findUnique({
+    where: { id: 'poll_1' },
+  });
+
+  if (existingPoll) {
+    console.log('✓ La encuesta poll_1 ya existe, saltando seed');
+    return;
+  }
+
+  // Crear encuesta de ejemplo
   const poll = await prisma.poll.create({
     data: {
       id: 'poll_1',

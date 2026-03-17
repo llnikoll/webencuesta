@@ -27,6 +27,9 @@ model Option {
   pollId    String
   poll      Poll     @relation(fields: [pollId], references: [id], onDelete: Cascade)
   text      String
+  name      String?  // Nombre del candidato
+  party     String?  // Partido político
+  image     String?  // URL de la imagen
   votes     Int      @default(0)
   
   voteRecords Vote[]

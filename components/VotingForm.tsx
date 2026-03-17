@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 interface VoteOption {
   id: string;
   text: string;
+  name?: string;
+  party?: string;
+  image?: string;
 }
 
 interface VotingFormProps {
@@ -31,11 +34,15 @@ export default function VotingForm({ options, onVote, isLoading, error }: Voting
 
   return (
     <form onSubmit={handleVote} className="space-y-6">
-      <div className="space-y-3">
+      <div className="space-y-4">
         {options.map((option) => (
           <label
             key={option.id}
-            className="flex items-center p-4 border-2 border-gray-200 rounded-lg cursor-pointer hover:border-indigo-300 hover:bg-indigo-50 transition-all"
+            className={`flex items-center p-4 border-2 rounded-xl cursor-pointer transition-all ${
+              selectedOption === option.id
+                ? 'border-indigo-500 bg-indigo-50'
+                : 'border-gray-200 hover:border-indigo-300 hover:bg-gray-50'
+            }`}
           >
             <input
               type="radio"
@@ -46,7 +53,29 @@ export default function VotingForm({ options, onVote, isLoading, error }: Voting
               disabled={isLoading}
               className="w-5 h-5 text-indigo-600"
             />
-            <span className="ml-4 text-lg font-medium text-gray-800">{option.text}</span>
+            
+            <div className="ml-4 flex items-center gap-4 flex-1">
+              {option.image && (
+                <img
+                  src={option.image}
+                  alt={option.text}
+                  className="w-16 h-16 rounded-full object-cover border-2 border-gray-200"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+              )}
+              <div className="flex-1">
+                <p className="text-lg font-semibold text-gray-800">
+                  {option.text}
+                </p>
+                {option.party && (
+                  <span className="inline-block mt-1 text-sm px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full">
+                    {option.party}
+                  </span>
+                )}
+              </div>
+            </div>
           </label>
         ))}
       </div>

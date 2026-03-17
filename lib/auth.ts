@@ -25,3 +25,23 @@ export function validateAdminSession(token: string): boolean {
   // Para este ejemplo, validar que tenga el formato correcto
   return token && token.startsWith('admin_');
 }
+
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+/**
+ * Middleware para requerir autenticación en API routes
+ */
+export async function requireAuth(
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<null | { error: string }> {
+  const token = req.headers.authorization?.replace('Bearer ', '') || 
+                req.cookies?.admin_token;
+  
+  if (!token || !validateAdminSession(token)) {
+    res.status(401).json({ error: 'No autorizado' });
+    return { error: 'No autorizado' };
+  }
+  
+  return null;
+}

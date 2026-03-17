@@ -8,8 +8,8 @@ export default function Custom404() {
         <h1 className="text-6xl font-bold text-indigo-600 mb-4">404</h1>
         <p className="text-xl text-gray-700 mb-2">Página no encontrada</p>
         <p className="text-gray-600 mb-6">La página que buscas no existe o ha sido removida.</p>
-        <Link href="/">
-          <a className="btn-primary">Volver al inicio</a>
+        <Link href="/" className="btn-primary">
+          Volver al inicio
         </Link>
       </div>
     </div>
